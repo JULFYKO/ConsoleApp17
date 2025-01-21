@@ -1,0 +1,67 @@
+﻿using System;
+namespace ConsoleApp17
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] A = new int[5];
+            Console.WriteLine("Enter 5 numbers:");
+            for (int i = 0; i < A.Length; i++)
+            {
+                A[i] = int.Parse(Console.ReadLine());
+            }
+
+            double[,] B = new double[3, 4];
+            Random rnd = new Random();
+            for (int i = 0; i < B.GetLength(0); i++)
+                for (int j = 0; j < B.GetLength(1); j++)
+                    B[i, j] = rnd.NextDouble() * 100;
+
+            Console.WriteLine("\nArray A: " + string.Join(" ", A));
+            Console.WriteLine("\nArray B:");
+            for (int i = 0; i < B.GetLength(0); i++)
+            {
+                for (int j = 0; j < B.GetLength(1); j++)
+                    Console.Write($"{B[i, j]:F2} ");
+                Console.WriteLine();
+            }
+
+            int maxA = A[0], minA = A[0], sumA = 0, productA = 1, evenSumA = 0;
+            foreach (var item in A)
+            {
+                maxA = Math.Max(maxA, item);
+                minA = Math.Min(minA, item);
+                sumA += item;
+                productA *= item;
+                if (item % 2 == 0) evenSumA += item;
+            }
+
+            double maxB = B[0, 0], minB = B[0, 0], sumB = 0, productB = 1;
+            foreach (var item in B)
+            {
+                maxB = Math.Max(maxB, item);
+                minB = Math.Min(minB, item);
+                sumB += item;
+                productB *= item;
+            }
+
+            double overallMax = Math.Max(maxA, maxB);
+            double overallMin = Math.Min(minA, minB);
+            double overallSum = sumA + sumB;
+            double overallProduct = productA * productB;
+
+            double oddColumnSum = 0;
+            for (int j = 0; j < B.GetLength(1); j += 2)
+                for (int i = 0; i < B.GetLength(0); i++)
+                    oddColumnSum += B[i, j];
+
+            Console.WriteLine($"\nMax value: {overallMax}");
+            Console.WriteLine($"Min value: {overallMin}");
+            Console.WriteLine($"Total sum: {overallSum}");
+            Console.WriteLine($"Total product: {overallProduct}");
+            Console.WriteLine($"Sum of even elements in A: {evenSumA}");
+            Console.WriteLine($"Sum of odd columns in B: {oddColumnSum:F2}");
+        }
+    }
+}
